@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV !== 'production'){
+    require('dotenv').config()
+}
 const express = require("express")
 const app = express()
 const expressLayouts = require("express-ejs-layouts")
@@ -11,7 +14,7 @@ app.set('layout','layouts/layout')
 app.use(expressLayouts)
 app.use(express.static("public"))
 
-MongoClient.connect('mongodb://localhost:27017',{useUnifiedTopology:true},function(err,client){
+MongoClient.connect(process.env.DATABASE_URL,{useUnifiedTopology:true},function(err,client){
     if(err){
         console.log("Error found:"+err)
     }else{
