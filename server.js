@@ -7,6 +7,7 @@ const expressLayouts = require("express-ejs-layouts")
 const MongoClient = require('mongodb').MongoClient
 
 const indexRouter = require('./routes/index')
+const authorRouter = require('./routes/authors')
 
 app.set('view engine','ejs')
 app.set('views',__dirname + '/views')
@@ -23,6 +24,7 @@ MongoClient.connect(process.env.DATABASE_URL,{useUnifiedTopology:true},function(
 })
 
 app.use('/',indexRouter)
+app.use('/authors',authorRouter)
 
 
 
