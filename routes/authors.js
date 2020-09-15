@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const db = require('../dbconfig/dbconnect')
 
 
 //all authors route
@@ -14,7 +15,23 @@ router.get('/new',(req,res) => {
 
 //create new author route
 router.post('/',(req,res) => {
-    res.send('create')
+    
+    db.connect(function(err){
+        if(err){
+            console.log("DB connection error before pushing new author data");
+            process.exit(1);
+        }else{
+            console.log("Db connected successfully, Ready to insert New author data")
+            db.get().collection('authors').insertOne({
+                name:req.body.name
+            },function(err,data){
+                if(!err){
+                    res.redirect('/authors')
+                    console.log("New Author successfully inserted into database")
+                }
+            })
+        }
+    })
 })
 
 module.exports = router

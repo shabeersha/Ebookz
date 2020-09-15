@@ -1,10 +1,9 @@
-if(process.env.NODE_ENV !== 'production'){
-    require('dotenv').config()
-}
+
 const express = require("express")
 const app = express()
 const expressLayouts = require("express-ejs-layouts")
-const MongoClient = require('mongodb').MongoClient
+const db = require('./dbconfig/dbconnect')
+const bodyParser = require('body-parser')
 
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors')
@@ -14,14 +13,16 @@ app.set('views',__dirname + '/views')
 app.set('layout','layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({limit: '10mb',extended: false}))
 
-MongoClient.connect(process.env.DATABASE_URL,{useUnifiedTopology:true},function(err,client){
-    if(err){
-        console.log("Error found:"+err)
-    }else{
-        console.log("DB Connected Successfully....,");
+db.connect(function (error) {
+    if(error){
+      console.log('unable to connect database');
+      process.exit(1);
+    } else{
+      console.log('Ebookz Database connected successfully........');
     }
-})
+  });
 
 app.use('/',indexRouter)
 app.use('/authors',authorRouter)

@@ -1,6 +1,18 @@
-<h2>Add New Author</h2>
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-sm">
+          <h2 class="text-monospace">Add New Author</h2>
 
-<form action="/authors" method="POST">
-<a href="/authors" class="btn btn-danger">Cancel</a>
-<button type="submit" class="btn btn-success">Create</button>
-</form> 
+            <form action="/authors" method="POST">
+                <div class="input-group">
+                    <%- include('_form_field') %> 
+                    <div class="input-group-append" id="button-addon4">
+                        <a href="/authors" class="btn btn-danger" type="button">Cancel</a>
+                        <button class="btn btn-success" type="submit">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+            
