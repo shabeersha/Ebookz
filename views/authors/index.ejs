@@ -5,7 +5,7 @@
 
             <form action="/authors" method="GET">
                 <div class="input-group">
-                    <input class="form-control col-md-4" type="text" placeholder="Enter Author Name" name="name" value="" pattern="[A-Za-z\s]" title="Please Enter atleast two Letters" required>
+                    <input class="form-control col-md-4" type="text" placeholder="Enter Author Name" name="name" value="<%= searchOptions.name %>">
                     <div class="input-group-append" id="button-addon4">
                         <button class="btn btn-info" type="submit">Search</button>
                     </div>

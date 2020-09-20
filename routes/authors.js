@@ -1,4 +1,5 @@
 const bodyParser = require('body-parser')
+const { query } = require('express')
 const express = require('express')
 const router = express.Router()
 const db = require('../dbconfig/dbconnect')
@@ -6,16 +7,19 @@ const db = require('../dbconfig/dbconnect')
 
 //all authors route
 router.get('/',(req,res) => {
-    
+    let searchOptions = {}
+    if(req.query.name != null && req.query.name !== ''){
+        searchOptions.name = new RegExp(req.query.name,'i')
+    }
     db.connect(function(err){
         if(err){
             console.log("DB connection error before find all author data");
             process.exit(1);
         }else{
         console.log("Db connected successfully, Ready to find all author data")
-        db.get().collection('authors').find().toArray(function(err,data){
+        db.get().collection('authors').find(searchOptions).toArray(function(err,data){
                  if(!err){
-                    res.render('authors/index',{ authors: data})
+                    res.render('authors/index',{ authors: data,searchOptions:req.query})
                      console.log("all Authors data successfully grabed from database")
                  }
              })
