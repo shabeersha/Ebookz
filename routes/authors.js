@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser')
 const express = require('express')
 const router = express.Router()
 const db = require('../dbconfig/dbconnect')
@@ -21,15 +22,17 @@ router.post('/',(req,res) => {
             console.log("DB connection error before pushing new author data");
             process.exit(1);
         }else{
-            console.log("Db connected successfully, Ready to insert New author data")
-            db.get().collection('authors').insertOne({
-                name:req.body.name
-            },function(err,data){
-                if(!err){
-                    res.redirect('/authors')
-                    console.log("New Author successfully inserted into database")
-                }
-            })
+        console.log("Db connected successfully, Ready to insert New author data")
+        db.get().collection('authors').insertOne({
+                 name:req.body.name
+                 },function(err,data){
+                
+                 if(!err){
+                     res.redirect('/authors')
+                     console.log("New Author successfully inserted into database")
+                 }
+             })
+            
         }
     })
 })
