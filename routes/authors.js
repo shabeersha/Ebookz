@@ -6,11 +6,27 @@ const db = require('../dbconfig/dbconnect')
 
 //all authors route
 router.get('/',(req,res) => {
-    res.render('authors/index')
+    
+    db.connect(function(err){
+        if(err){
+            console.log("DB connection error before find all author data");
+            process.exit(1);
+        }else{
+        console.log("Db connected successfully, Ready to find all author data")
+        db.get().collection('authors').find().toArray(function(err,data){
+                 if(!err){
+                    res.render('authors/index',{ authors: data})
+                     console.log("all Authors data successfully grabed from database")
+                 }
+             })
+            
+        }
+    })
+    
 })
 
 //new author route
-router.get('/new',(req,res) => {
+router.get('/new',async (req,res) => {
     res.render('authors/new')
 })
 
