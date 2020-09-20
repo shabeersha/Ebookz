@@ -6,4 +6,4 @@ Express.js
 MongoDb
 Bootstrap
 
-Developed with <3
+Made with :heart:
